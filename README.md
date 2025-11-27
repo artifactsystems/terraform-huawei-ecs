@@ -1,32 +1,32 @@
 # Huawei Cloud ECS Terraform Module
 
-Bu modül Huawei Cloud'da ECS (Elastic Cloud Server) instance'ları oluşturmak için kullanılır.
+Terraform module for creating ECS (Elastic Cloud Server) instances on Huawei Cloud.
 
-## Özellikler
+## Features
 
-- ✅ ECS instance oluşturma
-- ✅ EIP (Elastic IP) oluşturma ve bağlama (opsiyonel)
-- ✅ Birden fazla network interface desteği
-- ✅ Data disk desteği
-- ✅ Volume attachment desteği
-- ✅ User data desteği
-- ✅ Enterprise project desteği
-- ✅ Esnek ve özelleştirilebilir
+- ✅ ECS instance creation
+- ✅ EIP (Elastic IP) creation and association (optional)
+- ✅ Multiple network interface support
+- ✅ Data disk support
+- ✅ Volume attachment support
+- ✅ User data support
+- ✅ Enterprise project support
+- ✅ Flexible and customizable
 
-## Kullanım
+## Usage
 
-### Basit Örnek
+### Simple Example
 
 ```hcl
 module "ecs" {
-  source = "./terraform-huawei-ecs"
+  source = "git::https://github.com/artifactsystems/terraform-huawei-ecs.git?ref=main"
 
-  name              = "my-ecs-instance"
-  image_id          = "your-image-id"
-  flavor_id         = "s6.small.1"
+  name               = "my-ecs-instance"
+  image_id           = "your-image-id"
+  flavor_id          = "s6.small.1"
   security_group_ids = ["sg-xxxxx"]
-  availability_zone = "tr-west-1a"
-  key_pair_name     = "my-keypair"
+  availability_zone  = "tr-west-1a"
+  key_pair_name      = "my-keypair"
 
   network_ids = [
     {
@@ -41,18 +41,18 @@ module "ecs" {
 }
 ```
 
-### EIP ile Örnek
+### Example with EIP
 
 ```hcl
 module "ecs" {
-  source = "./terraform-huawei-ecs"
+  source = "git::https://github.com/artifactsystems/terraform-huawei-ecs.git?ref=main"
 
-  name              = "my-ecs-instance"
-  image_id          = "your-image-id"
-  flavor_id         = "s6.small.1"
+  name               = "my-ecs-instance"
+  image_id           = "your-image-id"
+  flavor_id          = "s6.small.1"
   security_group_ids = ["sg-xxxxx"]
-  availability_zone = "tr-west-1a"
-  key_pair_name     = "my-keypair"
+  availability_zone  = "tr-west-1a"
+  key_pair_name      = "my-keypair"
 
   network_ids = [
     {
@@ -60,9 +60,9 @@ module "ecs" {
     }
   ]
 
-  # EIP oluştur ve bağla
-  create_eip           = true
-  eip_bandwidth_size   = 10
+  # Create and attach EIP
+  create_eip                = true
+  eip_bandwidth_size        = 10
   eip_bandwidth_charge_mode = "traffic"
 
   tags = {
@@ -71,18 +71,18 @@ module "ecs" {
 }
 ```
 
-### Data Disk ile Örnek
+### Example with Data Disks
 
 ```hcl
 module "ecs" {
-  source = "./terraform-huawei-ecs"
+  source = "git::https://github.com/artifactsystems/terraform-huawei-ecs.git?ref=main"
 
-  name              = "my-ecs-instance"
-  image_id          = "your-image-id"
-  flavor_id         = "s6.medium.2"
+  name               = "my-ecs-instance"
+  image_id           = "your-image-id"
+  flavor_id          = "s6.medium.2"
   security_group_ids = ["sg-xxxxx"]
-  availability_zone = "tr-west-1a"
-  key_pair_name     = "my-keypair"
+  availability_zone  = "tr-west-1a"
+  key_pair_name      = "my-keypair"
 
   network_ids = [
     {
@@ -90,7 +90,7 @@ module "ecs" {
     }
   ]
 
-  # Data diskler ekle
+  # Add data disks
   data_disks = [
     {
       type = "SSD"
@@ -108,18 +108,18 @@ module "ecs" {
 }
 ```
 
-### User Data ile Örnek
+### Example with User Data
 
 ```hcl
 module "ecs" {
-  source = "./terraform-huawei-ecs"
+  source = "git::https://github.com/artifactsystems/terraform-huawei-ecs.git?ref=main"
 
-  name              = "my-ecs-instance"
-  image_id          = "your-image-id"
-  flavor_id         = "s6.small.1"
+  name               = "my-ecs-instance"
+  image_id           = "your-image-id"
+  flavor_id          = "s6.small.1"
   security_group_ids = ["sg-xxxxx"]
-  availability_zone = "tr-west-1a"
-  key_pair_name     = "my-keypair"
+  availability_zone  = "tr-west-1a"
+  key_pair_name      = "my-keypair"
 
   network_ids = [
     {
@@ -127,7 +127,7 @@ module "ecs" {
     }
   ]
 
-  # Başlangıç scripti
+  # Startup script
   user_data = <<-EOF
     #!/bin/bash
     apt-get update
@@ -141,21 +141,21 @@ module "ecs" {
 }
 ```
 
-## Terragrunt Kullanımı
+## Terragrunt Usage
 
 ```hcl
 # terragrunt.hcl
 terraform {
-  source = "git::https://github.com/your-org/terraform-huawei-ecs.git?ref=v1.0.0"
+  source = "git::https://github.com/artifactsystems/terraform-huawei-ecs.git?ref=v1.0.0"
 }
 
 inputs = {
-  name              = "pritunl-vpn"
-  image_id          = "your-ubuntu-image-id"
-  flavor_id         = "s6.small.1"
-  security_group_ids = dependency.security_group.outputs.security_group_id
-  availability_zone = "tr-west-1a"
-  key_pair_name     = "my-keypair"
+  name               = "my-instance"
+  image_id           = "your-ubuntu-image-id"
+  flavor_id          = "s6.small.1"
+  security_group_ids = [dependency.security_group.outputs.security_group_id]
+  availability_zone  = "tr-west-1a"
+  key_pair_name      = "my-keypair"
 
   network_ids = [
     {
@@ -169,7 +169,7 @@ inputs = {
   user_data = file("${get_terragrunt_dir()}/user-data.sh")
 
   tags = {
-    Application = "Pritunl"
+    Application = "MyApp"
     Environment = "production"
   }
 }
@@ -212,24 +212,27 @@ inputs = {
 - Terraform >= 1.0
 - Huawei Cloud Provider >= 1.47.0
 
-## Yaygın Flavor'lar (Instance Types)
+## Common Instance Flavors
 
-| Flavor | vCPU | RAM | Açıklama |
-|--------|------|-----|----------|
-| s6.small.1 | 1 | 1 GB | Küçük workload'lar |
-| s6.medium.2 | 1 | 2 GB | Hafif uygulamalar |
-| s6.large.2 | 2 | 4 GB | Orta seviye uygulamalar |
-| s6.xlarge.2 | 4 | 8 GB | Büyük uygulamalar |
-| s6.2xlarge.2 | 8 | 16 GB | Yoğun workload'lar |
+| Flavor | vCPU | RAM | Description |
+|--------|------|-----|-------------|
+| s6.small.1 | 1 | 1 GB | Small workloads |
+| s6.medium.2 | 1 | 2 GB | Light applications |
+| s6.large.2 | 2 | 4 GB | Medium applications |
+| s6.xlarge.2 | 4 | 8 GB | Large applications |
+| s6.2xlarge.2 | 8 | 16 GB | Heavy workloads |
 
-## Disk Tipleri
+## Disk Types
 
-- **SSD**: Yüksek performans SSD
-- **GPSSD**: Genel amaçlı SSD
-- **SAS**: Yüksek I/O SAS
-- **SATA**: Kapasitif disk (ucuz)
+- **SSD**: High performance SSD
+- **GPSSD**: General purpose SSD
+- **SAS**: High I/O SAS
+- **SATA**: Capacity disk (cost-effective)
 
 ## License
 
-MIT
+Apache 2.0
 
+## Contributing
+
+Contributions are welcome! Please read the [contributing guidelines](.github/CONTRIBUTING.md) first.
