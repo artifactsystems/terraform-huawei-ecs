@@ -30,10 +30,10 @@ resource "huaweicloud_compute_instance" "this" {
     }
   }
 
-  user_data                 = var.user_data
-  admin_pass                = var.admin_pass
-  enterprise_project_id     = var.enterprise_project_id
-  stop_before_destroy       = var.stop_before_destroy
+  user_data                   = var.user_data
+  admin_pass                  = var.admin_pass
+  enterprise_project_id       = var.enterprise_project_id
+  stop_before_destroy         = var.stop_before_destroy
   delete_disks_on_termination = var.delete_disks_on_termination
 
   tags = merge(
@@ -82,4 +82,3 @@ resource "huaweicloud_compute_volume_attach" "this" {
   volume_id   = each.value.volume_id
   device      = try(each.value.device, null)
 }
-

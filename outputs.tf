@@ -52,4 +52,3 @@ output "eip_bandwidth_id" {
   description = "EIP bandwidth ID"
   value       = try(huaweicloud_vpc_eip.this[0].bandwidth[0].id, null)
 }
-

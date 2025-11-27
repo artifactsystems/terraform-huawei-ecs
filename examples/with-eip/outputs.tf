@@ -17,4 +17,3 @@ output "ecs_status" {
   description = "ECS status"
   value       = module.ecs.status
 }
-

@@ -42,4 +42,3 @@ module "ecs" {
     Terraform   = "true"
   }
 }
-

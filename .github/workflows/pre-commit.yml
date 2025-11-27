@@ -49,4 +49,3 @@ jobs:
 
       - name: Run pre-commit checks
         run: pre-commit run --all-files
-
